@@ -3,8 +3,8 @@ import React from "react";
 
 function Spinner() {
   return (
-    <div class="spinner-container">
-      <div class="sppiner"></div>
+    <div className="spinner-container">
+      <div className="sppiner"></div>
     </div>
   );
 }

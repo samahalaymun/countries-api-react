@@ -10,7 +10,7 @@ function App() {
   const {theme} = useContext(Context)
   return (
     <Box>
-    <Router>
+    <Router basename="/">
      <Header />
       <Routes>
       <Route path="/" element={<Home />} />

@@ -18,7 +18,6 @@ function SearchBox({ placeholder }) {
         placeholder={placeholder}
         fullWidth
         className="form-control"
-        disableUnderline={true}
         onChange={handleInput}
       />
     </Box>
