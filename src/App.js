@@ -1,24 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
-
+import './App.css'
+import { BrowserRouter as Router, Routes ,Route} from 'react-router-dom'
+import Header from './components/Header';
+import Home from './components/pages/Home';
+import  Details  from './components/pages/Details';
+import { Box } from '@mui/material';
+import { Context } from '../src/Helper/Context'
+import { useContext } from 'react';
 function App() {
+  const {theme} = useContext(Context)
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Box>
+    <Router>
+     <Header />
+      <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/details/:country" element={<Details />} />
+      </Routes>
+    </Router>
+    </Box>
   );
 }
 
