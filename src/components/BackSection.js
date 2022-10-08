@@ -7,7 +7,7 @@ function BackSection() {
       <Button
         variant="contained"
         startIcon={<ArrowBackIcon />}
-        href="/"
+        href="/countries-api-react"
         sx={{
           backgroundColor: "#fff",
           color: "#111517",
