@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/samahalaymun/countries-api-react/static/css/main.cee46d92.css",
-    "main.js": "/samahalaymun/countries-api-react/static/js/main.9e065c82.js",
-    "index.html": "/samahalaymun/countries-api-react/index.html",
-    "main.cee46d92.css.map": "/samahalaymun/countries-api-react/static/css/main.cee46d92.css.map",
-    "main.9e065c82.js.map": "/samahalaymun/countries-api-react/static/js/main.9e065c82.js.map"
+    "main.css": "./static/css/main.cee46d92.css",
+    "main.js": "./static/js/main.95d713f5.js",
+    "index.html": "./index.html",
+    "main.cee46d92.css.map": "./static/css/main.cee46d92.css.map",
+    "main.95d713f5.js.map": "./static/js/main.95d713f5.js.map"
   },
   "entrypoints": [
     "static/css/main.cee46d92.css",
-    "static/js/main.9e065c82.js"
+    "static/js/main.95d713f5.js"
   ]
 }
