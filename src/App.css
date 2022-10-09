@@ -73,7 +73,7 @@ body {
   padding-right: 25px;
   border-radius: 5px;
 }
-.form-control .MuiInputBase-input.css-yz9k0d-MuiInputBase-input {
+.form-control .MuiInputBase-input.css-yz9k0d-MuiInputBase-input:not(.browser-default) {
   color: var(--font-color);
   border-bottom: none;
   box-sizing: border-box;
