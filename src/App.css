@@ -53,9 +53,6 @@ body {
   font-size: 23px;
   font-weight: 800;
 }
-.btn , .btn:hover , .btn:checked{
-  
-}
 .nav .mode .mode-btn {
   color: var(--font-color);
   text-transform: none;
@@ -186,18 +183,17 @@ ul li:not(.browser-default) {
   display: block;
   position: fixed;
 }
-.country-card.css-bhp9pd-MuiPaper-root-MuiCard-root {
+.country-card.MuiCard-root{
   background-color: var(--div-color);
-  padding-left: "20px";
-  margin-bottom: "20px";
   box-shadow: var(--box-shadow);
   border-radius: 7px;
   margin-right: 5px;
 }
-.country-card.css-bhp9pd-MuiPaper-root-MuiCard-root:hover {
+.country-card.MuiCard-root:hover {
   transition: 0.3s;
   transform: scale(1.03);
   box-shadow: var(--box-shadow-hover);
+  
 }
 .country-card-content p,
 h2 {
@@ -390,8 +386,9 @@ h2 {
   .nav .mode .mode-btn {
     margin: 0;
   }
-  .country-card.css-bhp9pd-MuiPaper-root-MuiCard-root {
+  .country-card.MuiCard-root {
     margin-right: 0;
+   
   }
 }
 @media (max-width: 600px) {

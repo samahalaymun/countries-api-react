@@ -6,6 +6,6 @@ const theme = createTheme({
     typography:{
         "fontFamily":"Nunito Sans",
         "fontSize":14
-    }
+    },
 })
 export default theme

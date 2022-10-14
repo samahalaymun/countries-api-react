@@ -8,6 +8,7 @@ import CardMedia from "@mui/material/CardMedia";
 import Star from "@mui/icons-material/Star";
 import CardContentItem from "./CardContentItem";
 import ButtonWithIcon from "./ButtonWithIcon";
+import "../App.css"
 
 function CountryCard(props) {
   return (
