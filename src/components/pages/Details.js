@@ -1,14 +1,20 @@
-import { Button, Container } from "@mui/material";
-import { Box } from "@mui/system";
+import { Box, Container } from "@mui/material";
 import React from "react";
+import ButtonWithIcon from "../ButtonWithIcon";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import BackSection from "../BackSection";
+import { useNavigate } from "react-router-dom";
 import DetailsInfoSection from "../DetailsInfoSection";
+
 function Details() {
-  document.title="Belgium"
+  const navigate = useNavigate();
+  document.title = "Belgium";
   return (
     <Container maxWidth="lg">
-      <BackSection></BackSection>
+      <Box className="back-btn">
+        <ButtonWithIcon label="Back" variant="contained" onClick={()=>navigate('/')}>
+          <ArrowBackIcon />
+        </ButtonWithIcon>
+      </Box>
       <DetailsInfoSection></DetailsInfoSection>
     </Container>
   );

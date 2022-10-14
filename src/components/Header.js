@@ -1,25 +1,26 @@
-import {
-  Box,
-  Container,
-  IconButton,
-} from "@mui/material";
-import React, { useContext } from "react";
+import { Box, Container } from "@mui/material";
+import React from "react";
 import "../App.css";
-import { Context } from "../Helper/Context";
-import NightlightOutlinedIcon from '@mui/icons-material/NightlightOutlined';
+import NightlightOutlinedIcon from "@mui/icons-material/NightlightOutlined";
+import ButtonWithIcon from "./ButtonWithIcon";
+import CardContentItem from "./CardContentItem";
+
 function Header() {
-  //  const {theme, toggle} = useContext(Context)
   return (
     <>
       <header>
         <Box className="nav">
           <Container maxWidth="lg">
-            <span className="brand-logo">Where in the world?</span>
+            <CardContentItem className="brand-logo" variant="p" value="Where in the world?"/>
             <Box className="mode right">
-              <IconButton size="medium" className="mode-btn">
+              <ButtonWithIcon
+                label="Dark Mode"
+                variant="Text"
+                onClick={() => {}}
+                className="mode-btn"
+              >
                 <NightlightOutlinedIcon />
-                Dark Mode
-              </IconButton>
+              </ButtonWithIcon>
             </Box>
           </Container>
         </Box>

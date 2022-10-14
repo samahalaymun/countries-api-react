@@ -1,21 +1,22 @@
-import './App.css'
-import { BrowserRouter as Router, Routes ,Route,HashRouter } from 'react-router-dom'
-import Header from './components/Header';
-import Home from './components/pages/Home';
-import  Details  from './components/pages/Details';
-import { Box } from '@mui/material';
-import { Context } from '../src/Helper/Context'
-import { useContext } from 'react';
+import "./App.css";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Header from "./components/Header";
+import Home from "./components/pages/Home";
+import Details from "./components/pages/Details";
+import { ThemeProvider } from "@mui/system";
+import theme from "./theme";
+
 function App() {
-  const {theme} = useContext(Context)
   return (
-    <HashRouter>
-     <Header />
-      <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/details/:country" element={<Details />} />
-      </Routes>
-    </HashRouter>
+    <ThemeProvider theme={theme}>
+      <Router basename="/countries-api-react">
+        <Header />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/details/:country" element={<Details />} />
+        </Routes>
+      </Router>
+    </ThemeProvider>
   );
 }
 

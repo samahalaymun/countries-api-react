@@ -1,18 +1,13 @@
 import { Box } from '@mui/material'
 import React from 'react'
 
-function CountryFlagCard() {
+function CountryFlagCard({flag,alt,className}) {
   return (
     <Box
         component="img"
-        sx={{
-          maxHeight:"405px",
-          height: "100%",
-          width: "100%",
-          objectFit:"cover"
-        }}
-        alt=""
-        src="https://flagcdn.com/be.svg"
+        className={className}
+        alt={alt}
+        src={flag}
       />
   )
 }
