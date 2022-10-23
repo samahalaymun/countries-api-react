@@ -1,7 +1,7 @@
 import { Box } from '@mui/material'
 import React from 'react'
 
-function CountryFlagCard({flag,alt,className}) {
+function ImageCard({flag,alt,className}) {
   return (
     <Box
         component="img"
@@ -12,4 +12,4 @@ function CountryFlagCard({flag,alt,className}) {
   )
 }
 
-export default CountryFlagCard
+export default ImageCard

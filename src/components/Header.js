@@ -1,11 +1,14 @@
 import { Box, Container } from "@mui/material";
-import React from "react";
+import React, { useContext } from "react";
 import "../App.css";
 import NightlightOutlinedIcon from "@mui/icons-material/NightlightOutlined";
-import ButtonWithIcon from "./ButtonWithIcon";
-import CardContentItem from "./CardContentItem";
+import NightlightIcon from "@mui/icons-material/Nightlight";
+import ButtonWithIcon from "./common/ButtonWithIcon";
+import CardContentItem from "./common/CardContentItem";
+import { ThemeContext } from "../contexts/ThemeContext";
 
 function Header() {
+  const { theme, toggleTheme } = useContext(ThemeContext);
   return (
     <>
       <header>
@@ -16,10 +19,10 @@ function Header() {
               <ButtonWithIcon
                 label="Dark Mode"
                 variant="Text"
-                onClick={() => {}}
+                onClick={toggleTheme}
                 className="mode-btn"
               >
-                <NightlightOutlinedIcon />
+                {theme==="dark"?<NightlightIcon/>:<NightlightOutlinedIcon />}
               </ButtonWithIcon>
             </Box>
           </Container>

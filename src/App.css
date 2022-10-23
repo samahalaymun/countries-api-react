@@ -6,6 +6,7 @@
   --white-color: #ffffff;
   --very-dark-blue-mode: #202c37;
   --dark-blue: #2b3945;
+  --transition: all 0.3s ease-in;
 }
 body.dark {
   --bg-color: var(--very-dark-blue-mode);
@@ -34,13 +35,14 @@ body {
   font-size: 14px;
   width: 100%;
   height: 100vh;
-  transition: all 0.5s ease-in-out;
   font-family: "Nunito Sans";
+  transition: var(--transition);
 }
 * {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+  transition: var(--transition);
 }
 .nav {
   padding: 20px 0;
@@ -85,7 +87,6 @@ body {
   border-bottom: none;
   box-sizing: border-box;
   padding-top: 5px;
- 
 }
 
 .form-control input:not(.browser-default):focus:not([readonly]) {
@@ -112,8 +113,8 @@ body {
   border: none;
   outline: none;
   border-radius: 5px;
-  
 }
+
 .dropDown label {
   color: var(--font-color);
   font-weight: 600;
@@ -135,6 +136,12 @@ ul li:not(.browser-default) {
   overflow-y: auto;
   padding-top: 8px;
 }
+.section-container {
+  border: none;
+}
+.layout-dragging {
+  border: 1px solid #27ae60;
+}
 .fav-section {
   padding-top: 8px;
   padding-right: 10px;
@@ -144,21 +151,22 @@ ul li:not(.browser-default) {
   height: 100%;
   overflow: hidden;
   overflow-y: auto;
+  padding-right: 7px;
 }
-.countries::-webkit-scrollbar {
+.countries::-webkit-scrollbar ,.favourites-list::-webkit-scrollbar{
   width: 17px;
 }
-.countries::-webkit-scrollbar-thumb {
+.countries::-webkit-scrollbar-thumb ,.favourites-list::-webkit-scrollbar-thumb {
   background-color: var(--dark-gray);
   border-radius: 100vw;
   border-left: 3px solid var(--div-color);
   border-right: 3px solid var(--div-color);
 }
 
-.countries::-webkit-scrollbar-thumb:vertical {
+.countries::-webkit-scrollbar-thumb:vertical ,.favourites-list::-webkit-scrollbar-thumb:vertical {
   height: 30px;
 }
-.countries::-webkit-scrollbar-track {
+.countries::-webkit-scrollbar-track ,.favourites-list::-webkit-scrollbar-track {
   background-color: var(--div-color);
   box-shadow: inset var(--box-shadow);
 }
@@ -183,17 +191,17 @@ ul li:not(.browser-default) {
   display: block;
   position: fixed;
 }
-.country-card.MuiCard-root{
+.country-card.MuiCard-root {
   background-color: var(--div-color);
   box-shadow: var(--box-shadow);
   border-radius: 7px;
   margin-right: 5px;
+  transition: var(--transition);
 }
 .country-card.MuiCard-root:hover {
   transition: 0.3s;
   transform: scale(1.03);
   box-shadow: var(--box-shadow-hover);
-  
 }
 .country-card-content p,
 h2 {
@@ -241,7 +249,6 @@ h2 {
 .preview-img {
   padding-right: 70px;
   max-height: 405px;
- 
 }
 .preview-img .img {
   max-height: 405px;
@@ -251,7 +258,6 @@ h2 {
 }
 .preview-details {
   padding: 45px 10px 30px 40px;
-
 }
 .preview-details .title {
   color: var(--font-color);
@@ -261,15 +267,13 @@ h2 {
 }
 .preview-details .item-info {
   padding: 5px 0;
+  color: var(--font-color);
 }
 .preview-details .item-info span {
   font-weight: 700;
-  color: var(--font-color);
-}
-.preview-details .item-info span {
   font-size: 15px;
-  color: var(--font-color);
 }
+
 .preview-info {
   margin-bottom: 55px;
 }
@@ -324,7 +328,7 @@ h2 {
 }
 .country-info span {
   color: var(--font-color);
-  font-weight: 800;
+  font-weight: 700;
   max-width: 150px;
   white-space: nowrap;
   overflow: hidden;
@@ -336,28 +340,36 @@ h2 {
   border-radius: 5px;
   object-fit: cover;
   max-width: 40px;
-  max-height: 30px;
+  max-height: 40px;
   margin-right: 10px;
 }
-.delete-fav-btn span svg {
+.delete-fav-btn.MuiButton-root,.delete-fav-btn.MuiButton-root:hover{
+  display: flex;
   color: #111517;
-  width: 20px;
-  height: 20px;
+  min-width: 15px;
+  height: 25px;
   background-color: #efefef;
-  border-radius: 20px;
-  padding: 5px;
+  border-radius: 50%;
+  font-size: 15px;
   font-weight: 800;
 }
-.fav-btn button {
-  color: #ccc;
+.fav-btn button,
+.set-fav-btn button {
   min-width: 20px;
   min-height: 20px;
   padding: 10px 0;
   display: none;
 }
+.set-fav-btn button {
+  color: orange;
+}
+.fav-btn button {
+  color: #ccc;
+}
 @media (max-width: 1024px) {
-  .back-btn ,.preview-img {
-     padding: 0 30px;
+  .back-btn,
+  .preview-img {
+    padding: 0 30px;
   }
   .preview-details {
     padding: 40px 30px;
@@ -370,7 +382,7 @@ h2 {
   .countries {
     height: 100%;
   }
-  .fav-btn button {
+  .fav-btn button,.set-fav-btn button  {
     display: flex;
   }
 }
@@ -388,7 +400,6 @@ h2 {
   }
   .country-card.MuiCard-root {
     margin-right: 0;
-   
   }
 }
 @media (max-width: 600px) {
@@ -414,14 +425,15 @@ h2 {
   .nav .mode .mode-btn {
     font-size: 14px;
   }
-  .back-btn ,.preview-img {
+  .back-btn,
+  .preview-img {
     padding: 0 10px;
- }
- .preview-details {
-   padding: 40px 10px;
- }
- .preview-details .title {
-  font-size: 25px;
-  margin-bottom: 20px;
-}
+  }
+  .preview-details {
+    padding: 40px 10px;
+  }
+  .preview-details .title {
+    font-size: 25px;
+    margin-bottom: 20px;
+  }
 }

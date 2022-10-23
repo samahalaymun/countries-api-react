@@ -1,25 +1,12 @@
 import { Box, Grid, MenuItem } from "@mui/material";
 import React from "react";
 import "../App.css";
-import DropDown from "./DropDown";
-import InputWithIcon from "./InputWithIcon";
+import DropDown from "./common/DropDown";
+import InputWithIcon from "./common/InputWithIcon";
 import SearchIcon from "@mui/icons-material/Search";
 import { useState } from "react";
-
-function Filter() {
-  const [region, setRegion] = useState("");
-  const handleChange = (event) => {
-    setRegion(event.target.value);
-  };
-
-  const menuItems = [
-    "Africa",
-    "Americas",
-    "Europe",
-    "Oceania",
-    "Asia",
-    "Favourites",
-  ];
+import {regions} from "../utils/utils"
+function Filter({handleSearchInput,handleRegionFilter,region}) {
   return (
     <>
       <Grid
@@ -36,7 +23,7 @@ function Filter() {
             <InputWithIcon
               type="text"
               placeHolder="Search for a country..."
-              onChange={() => {}}
+              onChange={handleSearchInput}
               className="form-control"
             >
               <SearchIcon className="search-icon" />
@@ -57,11 +44,11 @@ function Filter() {
             id="region-filter"
             selectId="select-region-filter"
             minWidth={200}
-            onChange={handleChange}
+            onChange={handleRegionFilter}
             value={region}
           >
-            {menuItems.map((item) => {
-              return <MenuItem value={item}>{item}</MenuItem>;
+            {regions.map((item) => {
+              return <MenuItem value={item} key={item}>{item}</MenuItem>;
             })}
           </DropDown>
         </Grid>
