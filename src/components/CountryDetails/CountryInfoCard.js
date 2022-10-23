@@ -39,11 +39,11 @@ function CountryInfoCard(props) {
           />
           <CountryDetailsContentItem
             label="Currencies"
-            value={props.currenciesString}
+            value={props.currencies}
           />
           <CountryDetailsContentItem
             label="Languages"
-            value={props.languageString}
+            value={props.languages}
           />
         </Grid>
       </Grid>
