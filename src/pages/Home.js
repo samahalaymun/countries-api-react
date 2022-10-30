@@ -1,38 +1,83 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Filter from "../components/Filter";
-import { Container, Grid } from "@mui/material";
-import AsideSection from "../components/AsideSection";
-import MainSection from "../components/MainSection";
+import { Box, Container, Grid } from "@mui/material";
 import CardContentItem from "../components/common/CardContentItem";
-import AsideSectionMainContent from "../components/AsideSectionMainContent";
 import FavouriteCard from "../components/FavouriteCard";
 import CountriesList from "../components/CountriesList/CountriesList";
 import Spinner from "../components/common/Spinner";
+import { applyFilter } from "../utils/utils";
 import {
-  applyRegionFilter,
-  getAllCountries,
-  getFavourites,
+  allCountriesApi,
+  deboune,
   isFavourite,
-  onSearchInput,
-} from "../services/countriesServices";
-import { updateLocalStorage, deboune, setTitle } from "../utils/utils";
+  searchApi,
+  setTitle,
+} from "../utils/utils";
+import useLocalStorage from "../hooks/useLocalStorage";
+import ErrorMessage from "../components/common/ErrorMessage";
+import { useFetch } from "../hooks/useFetch";
 
 function Home() {
-  const [countries, updateCountries] = useState([]);
-  const [modifiedCountries, setModifiedCountries] = useState([]);
-  const [favouriteCountries, updateFavouriteCountries] = useState(
-    getFavourites() || []
+  const [displayedCountries, setDisplayedCountries] = useState([]);
+  const [favouriteCountries, updateFavouriteCountries] = useLocalStorage(
+    "favourites",
+    []
   );
-  const [loading, updateLoading] = useState(true);
   const [searchInput, setSearchInput] = useState("");
   const [region, setRegion] = useState("");
   const [isDragging, setIsDragging] = useState(false);
+  const [fetchResult, setFetchResult] = useState(null);
+  const [errors, setErrors] = useState(null);
+  const { loading: countriesLoading, data: countries } =
+    useFetch(allCountriesApi);
+  const {
+    loading: searchLoading,
+    data: searchResult,
+    error: fetchError,
+  } = useFetch(searchInput && `${searchApi}${searchInput.toLowerCase()}`);
 
-  
-  const handleSearchInput = async (event) => {
+  useEffect(() => {
+    if (countries) {
+      setFetchResult(countries);
+      setDisplayedCountries(countries);
+      setTitle("Where in the world?");
+    }
+  }, [countries]);
+
+  useEffect(() => {
+    searchCountry();
+  }, [searchResult, fetchError]);
+
+  useEffect(() => {
+    if (fetchResult) {
+      let filteredCountries = applyFilter(
+        region,
+        searchInput,
+        fetchResult,
+        favouriteCountries
+      );
+      setDisplayedCountries(filteredCountries);
+    }
+  }, [region]);
+
+  const onSearch = async (event) => {
     setSearchInput(event.target.value);
   };
-  const debouncedHandleSearch = deboune(handleSearchInput, 500);
+
+  const handleSearchInput = deboune(onSearch, 500);
+
+  const searchCountry = () => {
+    if (searchInput.trim()) {
+      setErrors(null);
+      setFetchResult(searchResult);
+      setDisplayedCountries(searchResult || []);
+    } else {
+      setErrors(null);
+      setFetchResult(countries);
+      setDisplayedCountries(countries);
+    }
+    searchInput.trim() && fetchError && !searchResult && setErrors("Oops! country not found");
+  };
 
   const handleRegionFilter = (event) => {
     setRegion(event.target.value);
@@ -43,15 +88,13 @@ function Home() {
       return element.cca3 !== id;
     });
     updateFavouriteCountries(favourites);
-    updateLocalStorage("favourites", favourites);
   };
 
   const handleAddFavouriteCountry = (id) => {
-    let country = countries.find((item) => {
+    let country = fetchResult.find((item) => {
       return item.cca3 === id;
     });
     updateFavouriteCountries((prevState) => [...prevState, country]);
-    updateLocalStorage("favourites", [...favouriteCountries, country]);
   };
 
   const indicateFavouriteStarBtn = (id) => {
@@ -60,13 +103,6 @@ function Home() {
     } else {
       handleAddFavouriteCountry(id);
     }
-  };
-  const searchCountry = async () => {
-    if (searchInput.trim()) {
-      const searchedCountries = await onSearchInput(searchInput);
-      return searchedCountries;
-    }
-    return countries;
   };
 
   const drop = (event) => {
@@ -90,43 +126,23 @@ function Home() {
     setIsDragging(true);
   }
 
-  useEffect(() => {
-    searchCountry()
-      .then((data) => {
-        let searchedCountries = data;
-        let filteredCountries = applyRegionFilter(
-          region,
-          searchInput,
-          searchedCountries,
-          favouriteCountries
-        );
-        setModifiedCountries(filteredCountries);
-      });
-  }, [region, searchInput]);
-
-  useEffect(() => {
-    getAllCountries().then((data) => {
-      updateCountries(data);
-      setModifiedCountries(data);
-      setTitle("Where in the world?");
-    }).finally(()=> updateLoading(false));
-  }, []);
   return (
     <>
       <main>
         <Container maxWidth="lg">
           <Filter
-            handleSearchInput={debouncedHandleSearch}
+            handleSearchInput={handleSearchInput}
             handleRegionFilter={handleRegionFilter}
             region={region}
           />
+          {errors && <ErrorMessage error={errors} />}
           <Grid
             container
             sx={{ pb: 5, mt: { xs: 4, sm: 4, md: 4, lg: 4 } }}
             columns={12}
           >
             <Grid item lg={3} md={4} className="fav-section">
-              <AsideSection
+              <Box
                 className={`section-container ${
                   isDragging ? "layout-dragging" : ""
                 }`}
@@ -136,9 +152,8 @@ function Home() {
                 onDragEnter={dragEnter}
               >
                 <CardContentItem value="Favourites" variant="h2" />
-                <AsideSectionMainContent className="favourites-list">
-                  {favouriteCountries.map((favourite) => {
-                    const { name, flags, cca3 } = favourite;
+                <Box className="favourites-list">
+                  {favouriteCountries.map(({ name, flags, cca3 }) => {
                     return (
                       <FavouriteCard
                         key={cca3}
@@ -150,27 +165,29 @@ function Home() {
                       ></FavouriteCard>
                     );
                   })}
-                </AsideSectionMainContent>
-              </AsideSection>
+                </Box>
+              </Box>
             </Grid>
             <Grid item xs={12} sm={12} lg={9} md={8}>
-              <MainSection
-                className="countries"
-                spacing={{ xs: 3, sm: 8, md: 5, lg: 5 }}
-                columns={12}
-              >
-                {loading ? (
-                  <Spinner />
-                ) : (
-                  modifiedCountries && (
-                    <CountriesList
-                      countries={modifiedCountries}
-                      favourites={favouriteCountries}
-                      indicateFavouriteStarBtn={indicateFavouriteStarBtn}
-                    />
-                  )
-                )}
-              </MainSection>
+              <Box className="countries">
+                <Grid
+                  container
+                  columns={12}
+                  spacing={{ xs: 3, sm: 8, md: 5, lg: 5 }}
+                >
+                  {searchLoading || countriesLoading ? (
+                    <Spinner />
+                  ) : (
+                    displayedCountries && (
+                      <CountriesList
+                        countries={displayedCountries}
+                        favourites={favouriteCountries}
+                        indicateFavouriteStarBtn={indicateFavouriteStarBtn}
+                      />
+                    )
+                  )}
+                </Grid>
+              </Box>
             </Grid>
           </Grid>
         </Container>

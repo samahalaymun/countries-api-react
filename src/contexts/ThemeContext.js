@@ -1,20 +1,16 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useEffect } from "react";
 import React from "react";
-import { updateLocalStorage } from "../utils/utils";
+import useLocalStorage from "../hooks/useLocalStorage";
 
 
 const ThemeContext = createContext({});
 const ThemeContextProvider = (props) => {
-  const mode = localStorage.getItem("mode");
-  const [theme, setTheme] = useState(() => {
-    return mode ? mode : "light";
-  });
+  const [theme, setTheme] = useLocalStorage("mode", "light");
 
   const toggleTheme = () => {
     setTheme((prevState) => (prevState === "dark" ? "light" : "dark"));
   };
   useEffect(() => {
-    updateLocalStorage("mode", theme);
     theme === "dark"
       ? document.body.classList.add("dark")
       : document.body.classList.remove("dark");

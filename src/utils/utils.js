@@ -1,6 +1,7 @@
 export const allCountriesApi = "https://restcountries.com/v3.1/all";
 export const searchApi = "https://restcountries.com/v3.1/name/";
 export const searchByAlphaApi = "https://restcountries.com/v3.1/alpha/";
+export const searchByBorders = "https://restcountries.com/v3.1/alpha?codes=";
 export const regions = [
   "All",
   "Africa",
@@ -10,15 +11,6 @@ export const regions = [
   "Asia",
   "Favourites",
 ];
-
-export async function fetchAPI(url) {
-  const response = await fetch(url);
-  if (response.status === 200) {
-    const result = await response.json();
-    return result;
-  }
-}
-
 export const deboune = (func, delay) => {
   let timeoutid;
   return function (...args) {
@@ -31,8 +23,36 @@ export const deboune = (func, delay) => {
 export const setTitle = (title) => {
   document.title = title;
 };
-export function updateLocalStorage(name, item) {
-  Array.isArray(item)
-    ? localStorage.setItem(name, JSON.stringify(item))
-    : localStorage.setItem(name, item);
+export function isFavourite(country, favourites) {
+  let fav = false;
+  for (let i = 0; i < favourites.length; i++) {
+    if (favourites[i].cca3 === country) {
+      fav = true;
+      break;
+    }
+  }
+  return fav;
 }
+
+export function applyFilter(region, searchInput, countries, favourites) {
+  let filteredCountries = [];
+  if (region) {
+    if (region.toLowerCase() === "all") {
+      filteredCountries = [...countries];
+    } else if (region.toLowerCase() === "favourites") {
+      filteredCountries = favourites.filter((country) => {
+        return country.name.official.toLowerCase().indexOf(searchInput) !== -1;
+      });
+    } else {
+      filteredCountries = countries.filter((country) => {
+        if (country.region.toLowerCase() === region.toLowerCase()) {
+          return country;
+        }
+      });
+    }
+  }
+  return filteredCountries;
+}
+
+
+

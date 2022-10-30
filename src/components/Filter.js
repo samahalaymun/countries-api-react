@@ -4,7 +4,6 @@ import "../App.css";
 import DropDown from "./common/DropDown";
 import InputWithIcon from "./common/InputWithIcon";
 import SearchIcon from "@mui/icons-material/Search";
-import { useState } from "react";
 import {regions} from "../utils/utils"
 function Filter({handleSearchInput,handleRegionFilter,region}) {
   return (
@@ -42,7 +41,6 @@ function Filter({handleSearchInput,handleRegionFilter,region}) {
             label="Filter By"
             className="dropDown"
             id="region-filter"
-            selectId="select-region-filter"
             minWidth={200}
             onChange={handleRegionFilter}
             value={region}

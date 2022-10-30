@@ -122,7 +122,7 @@ body {
   font-weight: 600;
   font-size: 14px;
 }
-.dropDown #select-region-filter,
+.dropDown #region-filter,
 .dropDown .MuiSvgIcon-root {
   color: var(--font-color);
 }
@@ -131,6 +131,18 @@ ul:not(.browser-default) {
 }
 ul li:not(.browser-default) {
   color: var(--font-color);
+}
+.error{
+  max-width: 470px;
+  width: 100%;
+  color: rgb(79, 77, 77);
+  background-color: rgb(239, 228, 228);
+  border: 1px solid #ccc;
+  margin: 10px 0px;
+  padding: 15px 10px 15px 50px;
+  background-repeat: no-repeat;
+  background-position: 10px center;
+  border-radius: 5px;
 }
 .countries {
   height: calc(100vh - 250px);

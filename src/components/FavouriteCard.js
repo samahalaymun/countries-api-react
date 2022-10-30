@@ -5,12 +5,11 @@ import ClearIcon from "@mui/icons-material/Clear";
 import CardContentItem from "./common/CardContentItem";
 import ImageCard from "./common/ImageCard";
 
-function FavouriteCard({ name, flag, cca3, className, handleDeleteFav }, key) {
+function FavouriteCard({ name, flag, cca3, className, handleDeleteFav }) {
   return (
     <Box
       id={cca3}
       sx={{ display: "flex", justifyContent: "space-between", mb: 1.5 }}
-      key={key}
     >
       <Box className={className}>
         <ImageCard flag={flag} alt={name} className="fav-country-flag" />

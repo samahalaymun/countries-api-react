@@ -1,8 +1,9 @@
 import { Grid } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { getBorderName } from "../../services/detailsServices";
 import ImageCard from "../common/ImageCard";
 import CountryInfoCard from "./CountryInfoCard";
+import { searchByBorders } from "../../utils/utils";
+import { useFetch } from "../../hooks/useFetch";
 
 function DetailsInfoSection({ details }) {
   const [bordersNames, setBordersNames] = useState([]);
@@ -23,18 +24,19 @@ function DetailsInfoSection({ details }) {
     .map((item) => item.name)
     .toString();
   let languageString = Object.values(languages).toString();
-
+  const { data } = useFetch(borders&&`${searchByBorders}${borders}`);
+  
   useEffect(() => {
     let bordersArr = [];
-    if (borders) {
-      bordersArr = borders.map((border) => {
-        return getBorderName(border);
+    if (data) {
+      bordersArr = data.map((border) => {
+        return border.name.common;
       });
-      Promise.all(bordersArr).then((data) => {
-        setBordersNames(data);
-      });
+      setBordersNames(bordersArr);
     }
-  }, [borders]);
+    
+  }, [data]);
+
   return (
     <>
       <Grid container columns={12}>

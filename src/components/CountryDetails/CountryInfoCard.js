@@ -30,12 +30,12 @@ function CountryInfoCard(props) {
             label="Sub Region"
             value={props.subregion}
           />
-          <CountryDetailsContentItem label="Capital" value={props.capital} />
+          <CountryDetailsContentItem label="Capital" value={props?.capital[0]} />
         </Grid>
         <Grid item xs={12} sm={6} md={6} lg={6} className="right">
           <CountryDetailsContentItem
             label="Top Level Domain"
-            value={props.tld && props.tld[0]}
+            value={props.tld && props?.tld[0]}
           />
           <CountryDetailsContentItem
             label="Currencies"

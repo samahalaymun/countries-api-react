@@ -11,7 +11,7 @@ import ButtonWithIcon from "../common/ButtonWithIcon";
 import "../../App.css";
 import CountryCardContentItem from "./CountryCardContentItem";
 
-function CountryCard(props, key) {
+function CountryCard(props) {
   const dragStart = (e) => {
     e.dataTransfer.setData("card-id", props.id);
     e.target.style.opacity = 0.5;
@@ -23,7 +23,6 @@ function CountryCard(props, key) {
     <Grid item xs={12} sm={6} md={6} lg={4}>
       <Box
         sx={props.sx}
-        key={key}
         draggable={props.draggable}
         id={props.id}
         onDragStart={dragStart}
@@ -44,7 +43,10 @@ function CountryCard(props, key) {
                 value={props.population.toLocaleString("en-US")}
               />
               <CountryCardContentItem label="Region" value={props.region} />
-              <CountryCardContentItem label="Capital" value={props.capital} />
+              <CountryCardContentItem
+                label="Capital"
+                value={props?.capital && props?.capital[0]}
+              />
             </CardContent>
             <CardActions sx={{ justifyContent: "flex-end" }}>
               <Box

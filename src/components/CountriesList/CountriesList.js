@@ -1,12 +1,11 @@
 import React from "react";
-import { isFavourite } from "../../services/countriesServices";
+import { isFavourite } from "../../utils/utils";
 import CountryCard from "./CountryCard";
 
 function CountriesList({ countries, favourites, indicateFavouriteStarBtn }) {
   return (
     <>
-      {countries.map((country) => {
-        const { name, flags, cca3, population, region, capital } = country;
+      {countries.map(({ name, flags, cca3, population, region, capital }) => {
         const isFavouriteCountry = isFavourite(cca3, favourites);
         return (
           <CountryCard
